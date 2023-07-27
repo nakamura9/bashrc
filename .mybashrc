@@ -1,0 +1,38 @@
+# History control 
+HISTTIMEFORMAT="%F %T "
+HISTCONTROL=ignoredups
+
+#Aliases 
+alias q='exit'
+alias c='clear'
+alias h='history'
+
+# Move to the parent folder.
+alias ..='cd ..;pwd'
+
+# Move up two parent folders.
+alias ...='cd ../..;pwd'
+
+# Move up three parent folders.
+alias ....='cd ../../..;pwd'
+
+# Let there be color in grep!
+export GREP_OPTIONS=' — color=auto'
+
+function find_largest_files() {
+    du -h -x -s -- * | sort -r -h | head -20;
+}
+
+function git_branch() {
+    if [ -d .git ] ; then
+        printf "%s" "($(git branch 2> /dev/null | awk '/\*/{print $2}'))";
+    fi
+}
+
+# Set the prompt.
+
+function bash_prompt(){
+    PS1='${debian_chroot:+($debian_chroot)}'${blu}'$(git_branch)'${pur}' \W'${grn}' \$ '${clr}
+}
+
+bash_prompt

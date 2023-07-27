@@ -5,4 +5,7 @@
 
 # Usage 
 
+1. Append to the rc 
 `cat .mybashrc >> ~./bashrc`
+2. Activate the rc
+`source ~/.bashrc`

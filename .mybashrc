@@ -23,16 +23,9 @@ function find_largest_files() {
     du -h -x -s -- * | sort -r -h | head -20;
 }
 
-function git_branch() {
-    if [ -d .git ] ; then
-        printf "%s" "($(git branch 2> /dev/null | awk '/\*/{print $2}'))";
-    fi
-}
-
 # Set the prompt.
 
-function bash_prompt(){
-    PS1='${debian_chroot:+($debian_chroot)}'${blu}'$(git_branch)'${pur}' \W'${grn}' \$ '${clr}
+parse_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
-
-bash_prompt
+export PS1="\u@\h \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch)\[\e[00m\]$ "
